@@ -43,5 +43,30 @@ for(i in 1:nrow(ct1)){
 }
 new_ct1<-as.data.frame(new_values)
 data1_sam$CoinsInnTier1<-new_ct1
+coin<-data1_sam["CoinsOutofNet"]
+summary(coin)
+values<-vector()
+k=1
+for(i in 1:nrow(data1_sam)){
+  values[k]=as.numeric(str_extract(coin[i,],regexp))
+  k=k+1
+}
+mean_coin<-mean(values,na.rm=TRUE)
+for(i in 1:nrow(data1_sam)){
+  if(coin[i,]=="")
+    coin[i,]=mean_coin
+}
+##Above for loop replaced the missing values by NA..
+new_values<-vector()
+k=1
+for(i in 1:nrow(coin)){
+  new_values[k]=coin[i,]
+  if(is.na(coin[i,])==TRUE)
+    new_values[k]=mean_coin
+  k=k+1
+}
+#replacing NA with mean
+new_coin<-as.data.frame(new_values)
+data1_sam$CoinsOutofNet<-new_coin
 
            
