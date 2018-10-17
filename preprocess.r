@@ -69,4 +69,91 @@ for(i in 1:nrow(coin)){
 new_coin<-as.data.frame(new_values)
 data1_sam$CoinsOutofNet<-new_coin
 
-           
+##
+
+iscov<-data1_sam["IsCovered"]
+values<-vector()
+k=1
+nrow(iscov)
+for(i in 1:nrow(iscov))
+{
+  if(iscov[i,]=="Covered")
+    values[k]=1
+  if(iscov[i,]=="Not Covered")
+    values[k]=0
+  if(iscov[i,]=="")
+    values[k]=-1
+  k=k+1
+  
+}
+data1_sam$IsCovered=as.data.frame(values)
+isehb<-data1_sam["IsEHB"]
+values<-vector()
+k=1
+for(i in 1:nrow(isehb))
+{
+  if(isehb[i,]=="Yes")
+    values[k]=1
+  if(isehb[i,]=="No")
+    values[k]=0
+  if(isehb[i,]=="")
+    values[k]=-1
+  k=k+1
+}
+data1_sam$IsEHB=as.data.frame(values)
+inMOOP<-data1_sam["IsExclFromInnMOOP"]
+values<-vector()
+k=1
+for(i in 1:nrow(isehb))
+{
+  if(inMOOP[i,]=="Yes")
+    values[k]=1
+  if(inMOOP[i,]=="No")
+    values[k]=0
+  if(inMOOP[i,]=="")
+    values[k]=-1
+  k=k+1
+}
+data1_sam$IsExclFromInnMOOP=as.data.frame(values)
+onMOOP<-data1_sam["IsExclFromOonMOOP"]
+values<-vector()
+k=1
+for(i in 1:nrow(isehb))
+{
+  if(onMOOP[i,]=="Yes")
+    values[k]=1
+  if(onMOOP[i,]=="No")
+    values[k]=0
+  if(onMOOP[i,]=="")
+    values[k]=-1
+  k=k+1
+}
+data1_sam$IsExclFromOonMOOP=as.data.frame(values)
+ist1<-data1_sam["IsSubjToDedTier1"]
+values<-vector()
+k=1
+for(i in 1:nrow(isehb))
+{
+  if(ist1[i,]=="Yes")
+    values[k]=1
+  if(ist1[i,]=="No")
+    values[k]=0
+  if(ist1[i,]=="")
+    values[k]=-1
+  k=k+1
+}
+data1_sam$IsSubjToDedTier1=as.data.frame(values)
+ist2<-data1_sam["IsSubjToDedTier2"]
+values<-vector()
+k=1
+for(i in 1:nrow(isehb))
+{
+  if(ist2[i,]=="Yes")
+    values[k]=1
+  if(ist2[i,]=="No")
+    values[k]=0
+  if(ist2[i,]=="")
+    values[k]=-1
+  k=k+1
+}
+data1_sam$IsSubjToDedTier2=as.data.frame(values)
