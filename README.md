@@ -3,69 +3,69 @@
 
 Project Title: Predicting Winner of the IPL Season based on the match-by-match analysis
 
-Data Description:
+# Data Description:
 
-# 1. deliveries.csv #
+$$$ 1. deliveries.csv $$$
 
 -----About the file-----
 Ball by ball details for all matches for all seasons.
 
 -----Columns-----
-# match_id
-# inning - 
+1. match_id
+2. inning - 
 Tells if the first set of batting was going on or second. 1: First Innings 2: Second Innings 
-# batting_team - 
+3. batting_team - 
 The team name which is currently batting.
-# bowling_team -
+4. bowling_team -
 The team name which is currently bowling.
-# over -
+5. over -
 Describe the current over number.
-# ball -
+6. ball -
 Describe the current bowl no of the current over.
-# batsman -
+7. batsman -
 Name of the batsman on striking end.
-# non_striker -
+8. non_striker -
 Name of the batsman on non-striking end.
-#bowler
-# is_super_over
-# wide_runs
-# bye_runs
-# legbye_runs
-# noball_runs
-# penalty_runs
-# batsman_runs
-# extra_runs
-# total_runs
-# player_dismissed
-# dismissal_kind
-# fielder
+9. bowler
+10. is_super_over
+11. wide_runs
+12. bye_runs
+13. legbye_runs
+14. noball_runs
+15. penalty_runs
+16. batsman_runs
+17. extra_runs
+18. total_runs
+19. player_dismissed
+20. dismissal_kind
+21. fielder
 
-# 2. matches.csv #
+$$$ 2. matches.csv $$$
 
 -----About the file-----
-
+Details of each match 
 -----Columns-----
-# id
-# season
-# city
-# date
-# team1
-# team2
-# toss_winner
-# toss_decision
-# result
-# dl_applied
-# winner
-# win_by_runs
-# win_by_wickets
-# player_of_match
-# venue
-# umpire1
-# umpire2
-# umpire3
+1. id
+2. season
+3. city
+4. date
+5. team1
+6. team2
+7. toss_winner
+8. toss_decision
+9. result
+10. dl_applied
+11. winner
+12. win_by_runs
+13. win_by_wickets
+14. player_of_match
+15. venue
+16. umpire1
+17. umpire2
+18. umpire3
 
-Next steps:
-
-  -we are going to sample the data as we cannot study whole population.
+# Next steps:
+  
+  -Preprocessing and Exploratory data analysis.
   -literature survey on the data.
   
