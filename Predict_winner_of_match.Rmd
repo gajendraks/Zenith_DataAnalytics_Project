@@ -1,0 +1,102 @@
+```{r}
+library(caret)
+library(klaR)
+library(e1071)
+library(party)
+```
+
+```{r}
+setwd('F:/Third_year_Materials/Sem5/DataAnalytics_Files/Class_Project/DA_Project-ipl')
+matches <- read.csv("matches.csv")
+matches <- subset(matches,matches$result=="normal")
+```
+
+```{r}
+#Splitting the sample into test and train data set. 
+set.seed(123)
+ind <- sample(2, nrow(matches), replace = TRUE, prob = c(0.7,.3))
+train<-matches[ind==1,]
+test<-matches[ind==2,]
+```
+
+```{r}
+#Naive Bayes
+split=0.80
+wanted <- matches[,c("team1","team2","toss_winner","toss_decision","venue","winner")]
+trainIndex <- createDataPartition(wanted$winner, p=split, list=FALSE)
+data_train <- wanted[ trainIndex,]
+data_test <- wanted[-trainIndex,]
+# train a naive bayes model
+model <- naiveBayes(winner ~ team1 + team2 + toss_winner + toss_decision + venue, data=data_train)
+# make predictions
+x_test <- data_test[,1:5]
+y_test <- data_test[,6]
+predictions <- predict(model, x_test)
+# summarize results
+as.matrix(table(Actual = y_test, Predicted = predictions)) # create the confusion matrix
+```
+
+```{r}
+n = nrow(cm) # number of instances
+nc = nrow(cm) # number of classes
+diagonal = diag(cm) # number of correctly classified instances per class 
+rowsums = apply(cm, 1, sum) # number of instances per class
+colsums = apply(cm, 2, sum) # number of predictions per class
+p = rowsums / n # distribution of instances over the actual classes
+q = colsums / n # distribution of instances over the predicted classes
+
+precision = diagonal / colsums 
+recall = diagonal / rowsums 
+f1 = 2 * precision * recall / (precision + recall) 
+data.frame(precision, recall, f1)
+```
+
+```{r}
+nn3 <- knn3(winner ~ team1 + team2 + toss_winner + toss_decision + venue, train, test,k=3)
+table(test[,'winner'],nn3)
+```
+
+```{r}
+train$winner <- as.factor(train$winner)
+train$team1 <- as.factor(train$team1)
+train$team2 <- as.factor(train$team2)
+train$toss_winner <- as.factor(train$toss_winner)
+train$toss_decision <- as.factor(train$toss_decision)
+train$venue <- as.factor(train$venue)
+
+test$winner <- as.factor(test$winner)
+test$team1 <- as.factor(test$team1)
+test$team2 <- as.factor(test$team2)
+test$toss_winner <- as.factor(test$toss_winner)
+test$toss_decision <- as.factor(test$toss_decision)
+test$venue <- as.factor(test$venue)
+```
+
+```{r}
+#Creating tree
+DecisionTree <- ctree(winner ~ team1 + team2 + toss_winner + toss_decision + venue, data = train)
+fitted.results2 <- as.factor(predict(DecisionTree,newdata=test,type='response'))
+plot(DecisionTree)
+#confusionMatrix(fitted.results2,test$winner,positive='1')
+```
+
+```{r}
+#Linear SVM
+svmfit1 <- svm(winner ~ team1 + team2 + toss_winner + toss_decision + venue, data = train, kernel = "linear", cost = 10, scale = FALSE)
+fitted.result3 <- predict(svmfit1, newdata = test)
+#confusionMatrix(fitted.result3, test$winner, positive = '1')
+```
+
+```{r}
+#Radial SVM
+svmfit2 <- svm(winner ~ team1 + team2 + toss_winner + toss_decision + venue, data = train, kernel = "radial", cost = 10, scale = FALSE)
+fitted.result4 <- predict(svmfit2, newdata = test)
+#confusionMatrix(fitted.result4, test$winner, positive = '1')
+```
+
+```{r}
+#Polynomial SVM
+svmfit3 <- svm(winner ~ team1 + team2 + toss_winner + toss_decision + venue, data = train, kernel = "polynomial", cost = 10, scale = FALSE)
+fitted.result5 <- predict(svmfit3, newdata = test)
+#confusionMatrix(fitted.result3, test$winner, positive = '1')
+```
